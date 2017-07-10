@@ -1,6 +1,0 @@
-framework module Pods_FaceCropper_Tests {
-  umbrella header "Pods-FaceCropper_Tests-umbrella.h"
-
-  export *
-  module * { export * }
-}

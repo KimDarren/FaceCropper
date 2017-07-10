@@ -2,10 +2,4 @@ use_frameworks!
 
 target 'FaceCropper_Example' do
   pod 'FaceCropper', :path => '../'
-
-  target 'FaceCropper_Tests' do
-    inherit! :search_paths
-
-    
-  end
 end

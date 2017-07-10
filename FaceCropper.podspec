@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'FaceCropper'
-  s.version          = '0.1.0'
+  s.version          = '1.0.0'
   s.summary          = 'Crop faces, inside of your image, with Vision'
   s.homepage         = 'https://github.com/KimDarren/FaceCropper'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }

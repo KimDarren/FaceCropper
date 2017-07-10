@@ -9,17 +9,13 @@
 Pod::Spec.new do |s|
   s.name             = 'FaceCropper'
   s.version          = '0.1.0'
-  s.summary          = 'Crop faces, inside of your image.'
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
-
+  s.summary          = 'Crop faces, inside of your image, with Vision'
   s.homepage         = 'https://github.com/KimDarren/FaceCropper'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'KimDarren' => 'korean.darren@gmail.com' }
   s.source           = { :git => 'https://github.com/KimDarren/FaceCropper.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '11.0'
+  s.ios.deployment_target = '8.0'
 
   s.source_files = 'FaceCropper/Classes/**/*'
   s.frameworks = 'UIKit', 'Vision'

@@ -129,7 +129,7 @@ final class ExampleController: UIViewController {
 }
 
 
-extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+extension ExampleController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
     picker.dismiss(animated: true) {
@@ -149,7 +149,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
   
 }
 
-extension ViewController: UICollectionViewDataSource {
+extension ExampleController: UICollectionViewDataSource {
   
   func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! FaceCollectionViewCell

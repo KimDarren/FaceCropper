@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.author           = { 'KimDarren' => 'korean.darren@gmail.com' }
   s.source           = { :git => 'https://github.com/KimDarren/FaceCropper.git', :tag => s.version.to_s }
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '11.0'
 
   s.source_files = 'FaceCropper/Classes/**/*'
   s.frameworks = 'UIKit', 'Vision'

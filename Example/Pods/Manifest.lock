@@ -1,0 +1,16 @@
+PODS:
+  - FaceCropper (0.1.0)
+
+DEPENDENCIES:
+  - FaceCropper (from `../`)
+
+EXTERNAL SOURCES:
+  FaceCropper:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  FaceCropper: 8fbbbce30062c8f53a01e0cad09c4a4ee820a32d
+
+PODFILE CHECKSUM: b73c6da250acb9fab6026f9b89506858b75620ff
+
+COCOAPODS: 1.2.1

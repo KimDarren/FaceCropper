@@ -1,0 +1,6 @@
+framework module FaceCropper {
+  umbrella header "FaceCropper-umbrella.h"
+
+  export *
+  module * { export * }
+}

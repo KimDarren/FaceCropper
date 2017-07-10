@@ -1,0 +1,6 @@
+framework module Pods_FaceCropper_Example {
+  umbrella header "Pods-FaceCropper_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -167,10 +167,6 @@ final class ExampleController: UIViewController {
     return layer
   }
   
-  func isPortrait(image: UIImage) -> Bool {
-    return image.size.height >= image.size.width
-  }
-  
   func showAlert(_ message: String) {
     let alert = UIAlertController(title: "Oops", message: message, preferredStyle: .alert)
     let action = UIAlertAction(title: "Close", style: .cancel)

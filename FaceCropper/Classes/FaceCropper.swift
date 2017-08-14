@@ -117,7 +117,7 @@ public extension FaceCropper where T: CGImage {
     do {
       try detectFaceRequestHandler.perform([detectFaceRequest])
     } catch {
-      print(error)
+      completion(.failure(error))
     }
   }
 }

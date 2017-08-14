@@ -85,6 +85,41 @@ public extension FaceCropper where T: CGImage {
       completion(.failure(error))
     }
   }
+  
+  func detect(_ completion: @escaping (FaceCropResult<CGRect>) -> Void) {
+    guard #available(iOS 11.0, *) else {
+      return
+    }
+    
+    let detectFaceRequest = VNDetectFaceRectanglesRequest(completionHandler: { request, error in
+      guard error == nil else {
+        completion(.failure(error!))
+        return
+      }
+      
+      guard let observations = request.results as? [VNFaceObservation] else {
+        return
+      }
+      
+      let rects = observations.map({ rect -> CGRect? in
+        return rect.boundingBox
+      })
+      
+      guard let result = rects as? [CGRect], result.count > 0 else {
+        completion(.notFound)
+        return
+      }
+      
+      completion(.success(result))
+    })
+    
+    let detectFaceRequestHandler = VNImageRequestHandler(cgImage: self.detectable, options: [:])
+    do {
+      try detectFaceRequestHandler.perform([detectFaceRequest])
+    } catch {
+      completion(.failure(error))
+    }
+  }
 }
 
 public extension FaceCropper where T: UIImage {
@@ -108,6 +143,23 @@ public extension FaceCropper where T: UIImage {
       }
     }
     
+  }
+    
+  func detect(_ completion: @escaping (FaceCropResult<CGRect>) -> Void) {
+    guard #available(iOS 11.0, *) else {
+      return
+    }
+    
+    self.detectable.cgImage!.face.detect { result in
+      switch result {
+      case .success(let rects):
+        completion(.success(rects))
+      case .notFound:
+        completion(.notFound)
+      case .failure(let error):
+        completion(.failure(error))
+      }
+    }
   }
   
 }

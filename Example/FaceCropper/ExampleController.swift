@@ -118,12 +118,88 @@ final class ExampleController: UIViewController {
       }
     }
   }
+    
+  func drawRectangles(image: UIImage) {
+    imageView.layer.sublayers?.forEach { $0.removeFromSuperlayer() }
+
+    image.face.detect { [weak self] result in
+        switch result {
+        case .success(let rects):
+            for rect in rects {
+              guard let layer = self?.configureRect(rect: rect, image: image, parent: self?.imageView) else {
+                continue
+              }
+              self?.imageView.layer.addSublayer(layer)
+            }
+        case .notFound:
+            self?.showAlert("couldn't find any face")
+        case .failure(let error):
+            self?.showAlert(error.localizedDescription)
+        }
+    }
+  }
+  
+  func configureRect(rect: CGRect, image: UIImage, parent view: UIImageView?) -> CAShapeLayer? {
+    guard let view = view else {
+      return nil
+    }
+    
+    let size = imageSizeAspectFit(imgview: view)
+    
+    // Make appropriate calculations to draw rectangle
+    let width = rect.width * CGFloat(size.width)
+    let height = rect.height * CGFloat(size.height)
+    
+    let offsetX = (view.bounds.width - size.width) / 2
+    let x = rect.origin.x * CGFloat(size.width) + offsetX
+    
+    let offsetY = image.size.height > view.bounds.height ? height : rect.height * CGFloat(view.bounds.height) / 2
+    let y = (1 - rect.origin.y) * CGFloat(size.height) - offsetY
+    
+    let drawRect = CGRect(x: x, y: y, width: width, height: height)
+    
+    // Create rect layer
+    let layer = CAShapeLayer()
+    layer.frame = drawRect
+    layer.borderColor = UIColor.yellow.cgColor
+    layer.borderWidth = 1
+    layer.cornerRadius = 3
+    return layer
+  }
   
   func showAlert(_ message: String) {
     let alert = UIAlertController(title: "Oops", message: message, preferredStyle: .alert)
     let action = UIAlertAction(title: "Close", style: .cancel)
     alert.addAction(action)
     self.present(alert, animated: true)
+  }
+  
+  // Get the image size after applying aspect fit for the image in an UIImageView
+  func imageSizeAspectFit(imgview: UIImageView) -> CGSize {
+    var newwidth: CGFloat
+    var newheight: CGFloat
+    let image: UIImage = imgview.image!
+    
+    if image.size.height >= image.size.width {
+      newheight = imgview.frame.size.height;
+      newwidth = (image.size.width / image.size.height) * newheight
+      if newwidth > imgview.frame.size.width {
+        let diff: CGFloat = imgview.frame.size.width - newwidth
+        newheight = newheight + diff / newheight * newheight
+        newwidth = imgview.frame.size.width
+      }
+    }
+    else {
+      newwidth = imgview.frame.size.width
+      newheight = (image.size.height / image.size.width) * newwidth
+      if newheight > imgview.frame.size.height {
+        let diff: CGFloat = imgview.frame.size.height - newheight
+        newwidth = newwidth + diff / newwidth * newwidth
+        newheight = imgview.frame.size.height
+      }
+    }
+    
+    return CGSize(width: newwidth, height: newheight)
   }
   
 }
@@ -138,6 +214,7 @@ extension ExampleController: UIImagePickerControllerDelegate, UINavigationContro
         return
       }
       self.configure(image: image)
+      self.drawRectangles(image: image)
     }
   }
   
